@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sal-kurd <sal-kurd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saal-kur <saal-kur@student.42.fr>          #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/19 21:16:02 by sal-kurd          #+#    #+#             */
-/*   Updated: 2022/06/19 21:24:03 by sal-kurd         ###   ########.fr       */
+/*   Created: 2025-05-01 22:47:36 by saal-kur          #+#    #+#             */
+/*   Updated: 2025-05-01 22:47:36 by saal-kur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "get_next_line.h"
 
 char	*realloc_buffer(char *arr)
@@ -19,6 +20,8 @@ char	*realloc_buffer(char *arr)
 
 	index = 0;
 	j = 0;
+	if (!arr)
+		return (NULL);
 	while (arr[index] != NEWLINE && arr[index])
 		index++;
 	if (!arr[index])
@@ -28,6 +31,8 @@ char	*realloc_buffer(char *arr)
 	}
 	index++;
 	str = malloc(ft_strlen(arr + index) * sizeof(char) + 1);
+	if(!str)
+		return (NULL);
 	while (arr[index])
 		str[j++] = arr[index++];
 	str[j] = 0;
@@ -77,6 +82,7 @@ char	*read_data(int fd, char *arr)
 		if (bytes_read == -1)
 		{
 			free(temp_buffer);
+			free(arr);
 			return (NULL);
 		}
 		temp_buffer[bytes_read] = 0;
