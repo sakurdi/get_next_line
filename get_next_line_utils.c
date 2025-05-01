@@ -3,19 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sal-kurd <sal-kurd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saal-kur <saal-kur@student.42.fr>          #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/19 21:23:46 by sal-kurd          #+#    #+#             */
-/*   Updated: 2022/06/19 21:24:23 by sal-kurd         ###   ########.fr       */
+/*   Created: 2025-05-01 22:47:58 by saal-kur          #+#    #+#             */
+/*   Updated: 2025-05-01 22:47:58 by saal-kur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "get_next_line.h"
+#include <stdlib.h>
 
-int	ft_strlen(char *str)
+size_t	ft_strlen(char *str)
 {
-	size_t	len;
-
-	len = 0;
+	size_t	len = 0;
+	if (!str)
+		return (0);
 	while (str[len])
 		len++;
 	return (len);
@@ -23,6 +25,8 @@ int	ft_strlen(char *str)
 
 char	*ft_strchr(char *s, unsigned char c)
 {
+	if (!s)
+		return (NULL);
 	while (*s)
 	{
 		if (*s == c)
@@ -32,36 +36,41 @@ char	*ft_strchr(char *s, unsigned char c)
 	return (NULL);
 }
 
-char	*ft_empty_str(char *s)
+char	*ft_empty_str(void)
 {
-	s = malloc(sizeof(char) * 1);
+	char *s = malloc(1);
 	if (!s)
 		return (NULL);
-	*s = 0;
+	s[0] = 0;
 	return (s);
 }
 
 char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*str;
-	size_t	index;
-	size_t	j;
+	size_t	i = 0;
+	size_t	j = 0;
 
-	j = 0;
-	index = 0;
-	if (!s1 && s2)
-		s1 = ft_empty_str(s1);
-	str = malloc((ft_strlen(s1) + ft_strlen(s2)) + 1);
-	if (!str)
+	if (!s2)
 		return (NULL);
-	while (s1[index])
+	if (!s1)
+		s1 = ft_empty_str();
+	if (!s1)
+		return (NULL);
+	str = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (!str)
 	{
-		str[index] = s1[index];
-		index++;
+		free(s1);
+		return (NULL);
+	}
+	while (s1[i])
+	{
+		str[i] = s1[i];
+		i++;
 	}
 	while (s2[j])
-		str[index++] = s2[j++];
-	str[index] = 0;
+		str[i++] = s2[j++];
+	str[i] = 0;
 	free(s1);
 	return (str);
 }
